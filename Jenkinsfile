@@ -13,7 +13,7 @@ pipeline {
       stage('Delete Workspace') {
         steps {
           cleanWs()
-          sh "rm -rf /etc/ansible/roles/pwa/files/${OPERATOR}"
+          sh "sudo rm -rf /etc/ansible/roles/pwa/files/${OPERATOR}"
         }
       }
       stage('Git clone') {
@@ -110,12 +110,12 @@ pipeline {
         steps {
           script {
             def mavenPom = readMavenPom file: 'pom.xml'
-            sh 'mkdir -p /etc/ansible/roles/pwa/files/${OPERATOR}'
-            sh 'cp -rp config.properties /etc/ansible/roles/pwa/files/${OPERATOR}/config.properties'
-            sh 'cp -rp config_ar.properties /etc/ansible/roles/pwa/files/${OPERATOR}/config_ar.properties'
-            sh 'cp -rp messages.properties /etc/ansible/roles/pwa/files/${OPERATOR}/messages.properties'
-            sh 'cp -rp messages_ar.properties /etc/ansible/roles/pwa/files/${OPERATOR}/messages_ar.properties'
-            sh "cp -rp target/pwa-${mavenPom.version}.jar /etc/ansible/roles/pwa/files/${OPERATOR}/pwa-${mavenPom.version}.jar"
+            sh 'sudo mkdir -p /etc/ansible/roles/pwa/files/${OPERATOR}'
+            sh 'sudo cp -rp config.properties /etc/ansible/roles/pwa/files/${OPERATOR}/config.properties'
+            sh 'sudo cp -rp config_ar.properties /etc/ansible/roles/pwa/files/${OPERATOR}/config_ar.properties'
+            sh 'sudo cp -rp messages.properties /etc/ansible/roles/pwa/files/${OPERATOR}/messages.properties'
+            sh 'sudo cp -rp messages_ar.properties /etc/ansible/roles/pwa/files/${OPERATOR}/messages_ar.properties'
+            sh "sudo cp -rp target/pwa-${mavenPom.version}.jar /etc/ansible/roles/pwa/files/${OPERATOR}/pwa-${mavenPom.version}.jar"
           }
         }
       }
