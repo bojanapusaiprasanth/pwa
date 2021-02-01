@@ -121,12 +121,9 @@ pipeline {
       }
       stage('Invoke Ansible playbook') {
          steps {
-           // ansible plugin should be installed and global tool configuration also should be done
-           ansiblePlaybook disableHostKeyChecking: true,
-            extras: "-e host=${OPERATOR} OPERATOR=${OPERATOR} PORT=${PORT}",
-             installation: 'ansible2',
-              playbook: 'pwanew.yml',
-               tags: 'deployment'
+           script {
+             sh 'ansible-playbook /etc/ansible/pwanew.yml --tags "deployment" --extra-vars "host=$OPERATOR OPERATOR=$OPERATOR PORT=$PORT" -vvv'
+           }
          }
        }
       stage('Run Docker-Compose to start container') {
