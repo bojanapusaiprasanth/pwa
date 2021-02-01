@@ -13,7 +13,7 @@ pipeline {
       stage('Delete Workspace') {
         steps {
           cleanWs()
-          sh "rm -rf /etc/ansible/roles/pwa/files/${OPERATOR}/*"
+          sh "rm -rf /etc/ansible/roles/pwa/files/${OPERATOR}"
         }
       }
       stage('Git clone') {
