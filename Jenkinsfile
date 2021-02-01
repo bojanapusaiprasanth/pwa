@@ -92,7 +92,7 @@ pipeline {
             nexusArtifactUploader artifacts: [
                 [artifactId: 'pwa',
                  classifier: '',
-                  file: 'target/*.jar',
+                  file: "target/pwa-${mavenPom.version}.jar",
                    type: 'jar'
                    ]
            ],
