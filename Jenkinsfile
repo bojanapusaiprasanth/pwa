@@ -108,14 +108,17 @@ pipeline {
       }
       stage('Copy the files to ansible') {
         steps {
-          sh 'cp -rp config.properties /etc/ansible/roles/pwa/files/${OPERATOR}/'
-          sh 'cp -rp config_ar.properties /etc/ansible/roles/pwa/files/${OPERATOR}/'
-          sh 'cp -rp messages.properties /etc/ansible/roles/pwa/files/${OPERATOR}/'
-          sh 'cp -rp messages_ar.properties /etc/ansible/roles/pwa/files/${OPERATOR}/'
-          sh 'cp -rp pwa*.jar /etc/ansible/roles/pwa/files/${OPERATOR}/'
+          script {
+            def mavenPom = readMavenPom file: 'pom.xml'
+            sh 'cp -rp config.properties /etc/ansible/roles/pwa/files/${OPERATOR}/config.properties'
+            sh 'cp -rp config_ar.properties /etc/ansible/roles/pwa/files/${OPERATOR}/config_ar.properties'
+            sh 'cp -rp messages.properties /etc/ansible/roles/pwa/files/${OPERATOR}/messages.properties'
+            sh 'cp -rp messages_ar.properties /etc/ansible/roles/pwa/files/${OPERATOR}/messages_ar.properties'
+            sh "cp -rp target/pwa-${mavenPom.version}.jar /etc/ansible/roles/pwa/files/${OPERATOR}/pwa-${mavenPom.version}.jar"
+          }
         }
       }
-       stage('Invoke Ansible playbook') {
+      stage('Invoke Ansible playbook') {
          steps {
            // ansible plugin should be installed and global tool configuration also should be done
            ansiblePlaybook disableHostKeyChecking: true,
@@ -125,7 +128,7 @@ pipeline {
                tags: 'deployment'
          }
        }
-       stage('Run Docker-Compose to start container') {
+      stage('Run Docker-Compose to start container') {
          input {
            message "Please select YES or NO to proceed with Deployment"
            ok "Yes, We can Proceed"
