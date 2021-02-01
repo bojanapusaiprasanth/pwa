@@ -123,7 +123,7 @@ pipeline {
          steps {
            script {
              def mavenPom = readMavenPom file: 'pom.xml'
-             sh 'ansible-playbook /etc/ansible/pwanew.yml --tags "deployment" --extra-vars "host=$OPERATOR OPERATOR=$OPERATOR PORT=$PORT VERSION=${mavenPom.version}" -vvv'
+             sh 'ansible-playbook /etc/ansible/pwanew.yml --tags "deployment" --extra-vars "host=$OPERATOR OPERATOR=$OPERATOR PORT=$PORT" -vvv'
            }
          }
        }
