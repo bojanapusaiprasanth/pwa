@@ -110,6 +110,7 @@ pipeline {
         steps {
           script {
             def mavenPom = readMavenPom file: 'pom.xml'
+            sh 'mkdir -p /etc/ansible/roles/pwa/files/${OPERATOR}'
             sh 'cp -rp config.properties /etc/ansible/roles/pwa/files/${OPERATOR}/config.properties'
             sh 'cp -rp config_ar.properties /etc/ansible/roles/pwa/files/${OPERATOR}/config_ar.properties'
             sh 'cp -rp messages.properties /etc/ansible/roles/pwa/files/${OPERATOR}/messages.properties'
