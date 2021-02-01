@@ -123,7 +123,12 @@ pipeline {
          steps {
            // ansible plugin should be installed and global tool configuration also should be done
            ansiblePlaybook disableHostKeyChecking: true,
-            extras: '-e host:$OPERATOR OPERATOR=$OPERATOR PORT=$PORT',
+            extras: '-vv',
+            extraVars: [
+                  host: $OPERATOR ,
+                   OPERATOR: $OPERATOR,
+                    PORT: $PORT
+            ]
              installation: 'ansible2',
               playbook: 'pwanew.yml',
                tags: 'deployment'
